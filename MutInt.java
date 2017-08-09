@@ -17,7 +17,6 @@ public class MutInt implements Comparable<MutInt>{
 	}
 	@Override
 	public int compareTo(MutInt o) {
-		// TODO Auto-generated method stub
 		if(this.val>o.val){
 			return 1;
 		}

@@ -352,39 +352,6 @@ public class find_n_str_prob {
 		}
 	}
 	
-	public void my_max_freq(){
-////		for(Map.Entry<String, MutInt> entry: frequency.entrySet()){
-////			mean+=entry.getValue().val;
-////			if(entry.getValue().val>max_freq_in_model){
-////				max2 = max_freq_in_model;
-////				max2string = maxString;
-////				max_freq_in_model = entry.getValue().val;
-////				maxString = entry.getKey();
-////			}
-////			else if(entry.getValue().val>max2){
-////				max2 = entry.getValue().val;
-////				maxString = entry.getKey();
-////			}
-////		}
-//		
-////		mean/=frequency.size();	
-//
-//		TreeSet<Pair<String,MutInt>> sorted = new TreeSet<Pair<String,MutInt>>();
-//		for(Map.Entry<String, MutInt> entry: frequency.entrySet()){
-//			sorted.add(new Pair<String,MutInt>(entry.getKey(),entry.getValue()));
-//		}
-//		int numprint=20000;
-////		max_freq_in_model = sorted.last().entry2.val;
-////		maxString = sorted.pollLast().entry1;
-////		max2 = sorted.last().entry2.val;
-////		max2string = sorted.pollLast().entry1;
-//		if(this.n==2){
-//			for(int i = 0; i<numprint;i++){
-//				System.out.println("Max"+i+": "+sorted.last().entry2.val+"\t->"+sorted.pollLast().entry1);
-//			}
-//		}
-	}
-	
 	
 	
 	public static HTree returnTagsFromTree(String phrase){
@@ -420,27 +387,19 @@ public class find_n_str_prob {
 	}
 	
 	public static LinkedHashSet<String> possibleTags(ArrayList<String> prevtags){
-//		System.out.println("Lis: "+prevtags.toString());
 		int i = 0, j = 0;
 		LinkedHashSet<String> nextSet = new LinkedHashSet<String>();
 		Iterator<ArrayList<String>> iter_taglist = Tagger.allFileTags.iterator();
-//		for(i=0;i<Tagger.allFileTags.size();i++){
-//			ArrayList<String> curr_tag_line = iter_taglist.next();
 		for(ArrayList<String> curr_tag_line = iter_taglist.next();iter_taglist.hasNext();curr_tag_line = iter_taglist.next()){
-//			System.out.println("Curr line tags: "+curr_tag_line.toString());
 			boolean canAdd = true;
 			if(curr_tag_line.size()>prevtags.size()){
 				for(j=0;j<prevtags.size() ;j++){
-//					System.out.println("PrevTag "+j+" : "+prevtags.get(j));
-//					System.out.println("CurLTag "+j+" : "+curr_tag_line.get(j));
 					if(!prevtags.get(j).equals(curr_tag_line.get(j))){
-//						System.out.println("FALSE");
 						canAdd = false;
 						break;
 					}
 				}
 				if(canAdd == true){
-//					System.out.println("TRU");
 					nextSet.add(curr_tag_line.get(j));
 				}
 			}
@@ -448,7 +407,6 @@ public class find_n_str_prob {
 				canAdd = false;
 			}
 		}
-//		System.out.println(nextSet.toString());
 		return nextSet;
 	}
 	

@@ -22,7 +22,6 @@ public class Tagger {
 	static int maxsize = 0;
 	public static void AddNewTags(String s){
 			a++;
-//			System.out.println(a);
 			String[] strs = s.split("(?<=[?!.])");
 			int n_tbtag = strs.length;
 			int slen = s.length();
@@ -41,7 +40,6 @@ public class Tagger {
 					String[] tok_of_tok = tok.split("/+");
 					tags_tbappend.add(tok_of_tok[tok_of_tok.length-1]);
 				}
-//				System.out.println(tags_tbappend.toString());
 				allFileTags.add(tags_tbappend);
 			}
 		}
@@ -71,11 +69,9 @@ public class Tagger {
 			ArrayList<String> tags_tbappend = new ArrayList<String>();
 			while(line!=null){
 				if(line.equals("")){
-//					System.out.println("here");
 					newEle=1;
 				}
 				if(newEle==1){
-//					System.out.println(tags_tbappend);
 					if(tags_tbappend.size()>0){
 						if(tags_tbappend.size()>maxsize){
 							maxsize = tags_tbappend.size();
@@ -88,7 +84,6 @@ public class Tagger {
 				else{
 					tags_tbappend.add(line);
 				}
-//				System.out.println(line);
 				line = br.readLine();
 			}
 			if(newEle==0 && tags_tbappend.size()>0){
@@ -111,11 +106,9 @@ public class Tagger {
 			ArrayList<String> tags_tbappend = new ArrayList<String>();
 			while(line!=null){
 				if(line.equals("")){
-//					System.out.println("here");
 					newEle=1;
 				}
 				if(newEle==1){
-//					System.out.println(tags_tbappend);
 					if(tags_tbappend.size()>0){
 						if(tags_tbappend.size()>maxsize){
 							maxsize = tags_tbappend.size();
@@ -128,7 +121,6 @@ public class Tagger {
 				else{
 					tags_tbappend.add(line);
 				}
-//				System.out.println(line);
 				line = br.readLine();
 			}
 			if(newEle==0 && tags_tbappend.size()>0){
