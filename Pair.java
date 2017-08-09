@@ -1,4 +1,8 @@
 
+// CLASS DESCRIPTION:
+// Pair stores a set of 2 values. Usage: Storing a String and it's frequency value for instance.
+// Methods implemented are basic getters and setters.
+
 public class Pair<K extends Comparable<K>,T extends Comparable<T>> implements Comparable<Pair<K,T>>{
 	K entry1;
 	T entry2;
