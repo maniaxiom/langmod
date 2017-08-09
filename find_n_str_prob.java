@@ -70,71 +70,51 @@ public class find_n_str_prob {
 		float maxf = 0;
 		String strans = "";
 		MutInt prevf = prevgram.getFrequency().get(key_arg);
-//		System.out.println("Prev keyarg: "+key_arg);
-//		System.out.println(prevgram.frequency.toString());
 		Pair<String,Float> newval = null;
-//		PriorityQueue<Pair<String,Integer>> topk = predNext(str, num, vocab, wordnum,completeStringTillNow);
 		PriorityQueue<Pair<String,Integer>> topk = new PriorityQueue<Pair<String,Integer>>();
 		if(prevf!=null){
 			topk.addAll(prevf.topk);
 		}
-//		System.out.println(key_arg);
-//		System.out.println(topk.toString());
 		int runno = 1;
-//		LinkedHashSet<String> possibleTags = possibleTags(returnTags(completeStringTillNow));
 		HTree possible_tags;
 		if(wordnum==0){
 			possible_tags = returnTagsFromTree(completeStringTillNow);
 		}
 		else{
-			possible_tags = posNode; //replace null with param
+			possible_tags = posNode;
 		}
 		while(!topk.isEmpty()){
-//			if(wordnum<=1){
-//				System.out.println("Run Seq: "+wordnum+": "+(runno++)+" - "+key_arg);
-//			}
 			String s = topk.poll().entry1;
 			String keyarg2_tag = returnTags(s).get(0);
 			HTree newNode = null;
 			if(possible_tags!=null){
 				newNode = possible_tags.options.get(keyarg2_tag);
 			}
-//			if(possibleTags.contains(keyarg2_tag)){
 			if(newNode != null){
 				System.out.println("Ho2: "+keyarg2_tag);
 				System.out.println(completeStringTillNow + " "+s);
 				System.out.println("----------");
 				String next = key_arg.concat(" "+s);
-	//			System.out.println("sugsec next"+next);
-	//			System.out.println(frequency.toString());
 				MutInt currf = frequency.get(next);
-	//			if(currf==null){System.out.println("currfnull");}
-	//			if(prevf==null){System.out.println("prevfnull");}
 				if(currf!=null && prevf!=null){
-	//				System.out.println("1");
 					float currval = (float)currf.val/prevf.val;
 					int under_consideration = 0;
 					float currval2 = 0;
 					if(wordnum<wordlimit-1){
-	//					System.out.println("12");
 						newval = suggestSentence(next, num, vocab, wordnum+1, wordlimit, prevgram,str.concat(" "+s),newNode);
 						if(newval!=null){
 							under_consideration = 1;
-	//						System.out.println("123");
 							currval2 = currval;
 							currval2 *= newval.entry2;
 							currval2 += (0.5);
 							if(currval2>maxf){
-	//							System.out.println("1234");
 								maxf = currval2;
 								strans = s.concat(" "+newval.entry1);
 							}
 						}
 						else{
 							under_consideration = 2;
-	//						System.out.println("12345");
 							if(currval>maxf){
-	//							System.out.println("123456");
 								maxf = currval;
 								strans = s;
 							}
@@ -150,9 +130,7 @@ public class find_n_str_prob {
 						}
 					}
 					if(wordnum == 0){
-	//					System.out.println("Tried: "+s);
 						if(finalSet.size()<final_no_of_res){
-	//						System.out.println("ya");
 							if(under_consideration == 1){
 								finalSet.add(new Pair(s.concat(" "+newval.entry1),currval2));
 							}
@@ -201,12 +179,9 @@ public class find_n_str_prob {
 			}
 		}
 		String key_arg = stbr.toString().toLowerCase();
-//		System.out.println(key_arg);
 		LinkedHashSet<String> possibleTags = possibleTags(returnTags(completeStringTillNow));
-//		System.out.println("PREVIOUS STR: "+completeStringTillNow+"PREVIOUS TAGS: "+returnTags(completeStringTillNow).toString());
 		for(Map.Entry<String, MutInt> keyvalpair: vocab.entrySet()){
 			String s = keyvalpair.getKey();
-//			if(wordnum>0 || (wordnum==0 && keyvalpair.getValue().position<300)){
 				String keyarg2_tag = returnTags(s).get(0);
 				System.out.print(s + "\t");
 				System.out.println("keyarg2tag: "+keyarg2_tag);
@@ -214,20 +189,9 @@ public class find_n_str_prob {
 				if(possibleTags.contains(keyarg2_tag)){
 					String keyarg2 = key_arg.concat(s);
 					System.out.println("This is keyarg2: "+keyarg2);
-//					System.out.println("HM: "+frequency.toString());
 					MutInt currf = frequency.get(keyarg2);
 					if(currf!=null){
-//						System.out.println("boop"+s);
-						int useval = currf.val;
-//						float checkval_s = mainframe.unigram.frequency.get(s).val;
-//						checkval_s/=mainframe.unigram.mean;
-//						if(checkval_s>=1){
-////						System.out.println("Hi: "+s);
-//							useval/=2;
-//						}
-//						if(mainframe.unigram.frequency.get(s).isCommon){
-//							useval/=2;
-//						}
+						int useval = currf.val
 						if(k_num>0){
 							topk.add(new Pair<String, Integer>(s,useval));
 							k_num--;
@@ -247,13 +211,8 @@ public class find_n_str_prob {
 							}
 						}
 					}
-					else{
-//						System.out.println("Crie");
-					}
-//				}
 			}
 		}
-		System.out.println("Prev: "+ completeStringTillNow+"Topk: "+topk.toString());
 		return topk;
 	}
 	
@@ -316,18 +275,13 @@ public class find_n_str_prob {
 	}
 	
 	public void calc_freq(String s){
-		int lel = 0;
 		s = s.replaceAll("[.!?]+", " . ");
-//		s = s.replaceAll("[\'\"-,()]"," ");
 		String[] tokens = s.split(" +");
 		int len = tokens.length;
-//		int pos_count = 0;
 		TreeSet<String> t = new TreeSet<String>();
 		for(String sl: tokens){
 			t.add(sl.toLowerCase());
 		}
-//		System.out.println("Uniq size: "+t.size()+"\tToken size: "+tokens.length);
-		lel = 0;
 		for(int i = 0;i<len-n+1;i++){
 			StringBuilder strb = new StringBuilder();
 			for(int j = i;j<i+n-1;j++){
@@ -339,7 +293,6 @@ public class find_n_str_prob {
 					}
 			}
 			String str = strb.toString().toLowerCase();
-//			if(!str.contains("<eos>")){
 				MutInt freq_str = frequency.get(str);
 				if(freq_str==null){
 					MutInt corrfreq = new MutInt();
@@ -349,9 +302,7 @@ public class find_n_str_prob {
 				else{
 					freq_str.increment();
 				}
-//			}
 		}
-//		System.out.println("Max pos: "+lel);
 	}
 	
 	public void genfreq(String text, int gramnum, HashMap<String, MutInt> nplusgram){
@@ -376,15 +327,11 @@ public class find_n_str_prob {
 					freq_str.increment();
 				}
 				if(i+gramnum<words.length){
-//					System.out.println("Hi");
 					strval.append(" "+words[i+gramnum-1]);
-//					System.out.println(strval.toString().toLowerCase());
 					MutInt nextval = nplusgram.get(strval.toString().toLowerCase());
 					freq_str = frequency.get(str);
 					if(nextval!=null){
-//						System.out.println("manik");
 						if(freq_str.topk.size()<k_num_max){
-//							System.out.println("arora");
 							Pair<String,Integer> nextpair = new Pair<String,Integer>(words[i+gramnum-1].toLowerCase(),nextval.val);
 							if(!freq_str.topk.contains(nextpair)){
 								freq_str.topk.add(nextpair);
@@ -392,19 +339,14 @@ public class find_n_str_prob {
 						}
 						else if(nextval.val > freq_str.topk.peek().entry2){
 							Pair<String,Integer> nextpair = new Pair<String,Integer>(words[i+gramnum-1].toLowerCase(),nextval.val);
-//							System.out.println("bains");
 							if(!freq_str.topk.contains(nextpair)){
-//								System.out.println("geeta");
 								freq_str.topk.add(nextpair);
 							}
 							if(freq_str.topk.size()>k_num_max){
-//								System.out.println("rajeev");
 								freq_str.topk.poll();
 							}
 						}
-//						System.out.println(freq_str.topk.toString());
 					}
-//					else{System.out.println("Bye");}
 				}
 				
 		}

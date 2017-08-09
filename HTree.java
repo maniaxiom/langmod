@@ -52,19 +52,15 @@ public class HTree {
 				tbprinted = entry.getKey()+"->";
 				System.out.print(tbprinted);
 				printTree(entry.getValue().options, prevspace+tbprinted.length());
-//				i++;
 			}
 			else{
 				if(prevspace!=0){
 					tbprinted = String.format("%0$"+prevspace+"s"," ");
 				}
 				tbprinted += entry.getKey()+"->";
-//				System.out.print(prevspace+"\t"+tbprinted.length());
 				System.out.print(tbprinted);
 				printTree(entry.getValue().options, tbprinted.length());
 			}
-			
-//			System.out.println("\tTBP:\t$"+tbprinted+"$\t "+tbprinted.length());
 			i++;
 		}
 	}
